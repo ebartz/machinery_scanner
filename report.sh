@@ -102,8 +102,22 @@ select_timeframe(){
 
 
 execute_report_html(){
-# TODO: add some logic for the html report
-echo foo
+  # change to reports directory
+  cd $MACHINERY_ROOT
+
+  # creake directory and manifest for SOURCE revision
+  mkdir "$1_$2"
+  git show $2:$1/manifest.json > $1_$2/manifest.json
+
+  # creake directory and manifest for DESTINATION revision
+  mkdir "$1_$3"
+  git show $3:$1/manifest.json > $1_$3/manifest.json
+
+  machinery compare --html $1_$2 $1_$3
+
+  # remove compare dirs
+  rm -rf $1_$2/ $1_$3/
+
 }
 
 execute_report_machinery(){
