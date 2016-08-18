@@ -12,17 +12,41 @@
 #
 
 
+######################
+# fetch vars
+######################
+
+while [[ $# -gt 1 ]]
+do
+  key="$1"
+  case $key in
+    -h|--host)
+    HOST_LIST="$2"
+    shift
+    ;;
+    -f|--file)
+    HOST_FILE="$2"
+    shift
+    ;;
+    -p|--parallel)
+    PARALLEL_JOBS="$2"
+    shift
+    ;;
+    *)
+            # unknown option
+    ;;
+  esac
+shift # past argument or value
+done
+
 # main vars
-HOST_LIST="machinery_host1 machinery_host2 machinery_host3"
-PARALLEL_JOBS=4
 MACHINERY_ROOT=~/.machinery/
-
-# TODO: add parameter for file instead of hostlist
-# TODO: add external parameters do override defaults
+$PARALLEL_JOBS_DEFAULT=4
 
 
-
+######################
 # main functions
+######################
 
 # checks weatcher the repo exists
 # or creates a new one and adds everything to an initial commit
@@ -35,6 +59,21 @@ check_git_repo(){
     git add .
     git commit -a -m "initial commit"
   fi
+}
+
+# concats the host list which comes in from a parameter with the ones which may come from a file
+generate_host_list(){
+HOST_LIST=$HOST_LIST $(test -f $HOST_FILE && cat $HOST_FILE | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g')
+}
+
+# will verify needed variables and print propper errors
+# if something is missing
+verify_variables(){
+# check weather there is at least one host in $HOST_LIST
+if [ $(wc -w <<< "$HOST_LIST") -eq 0 ]; then echo No hosts specified.; exit 1; fi
+
+if [ ! -z ${PARALLEL_JOBS+x} ]; then PARALLEL_JOBS=$PARALLEL_JOBS_DEFAULT; fi
+
 }
 
 # performs the actual scan of one host which will be passed over as $1
@@ -55,12 +94,19 @@ print_help(){
 echo foo
 }
 
-
+######################
 # begin processing
-
+######################
 
 # check GIT repo
 check_git_repo
+
+# go ahead and generate the HOST_LIST
+generate_host_list
+
+# verify all needed variables
+verify_variables
+
 
 # launch the actual scan
 (
