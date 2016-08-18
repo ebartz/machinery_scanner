@@ -59,7 +59,6 @@ if [ -z ${HOST_NAME+x} ]; then echo 'Hostname for report is not set.'; exit 1; f
 # check weather data for host exists
 if [ ! -f "$MACHINERY_ROOT/$HOST_NAME/manifest.json" ]; then echo 'Host has not been inspected yet.'; exit 1; fi 
 
-
 }
 
 # depending on $OUTPUT this will start machinery --serve with a compare
@@ -75,9 +74,12 @@ then
 elif [ "$OUTPUT" == "html" ] 
 then
   execute_report_html $HOST_NAME $COMPARE_SOURCE $COMPARE_DESTINATION
+elif [ "$OUTPUT" == "machinery" ]
+then
+  execute_report_machinery $HOST_NAME $COMPARE_SOURCE $COMPARE_DESTINATION
 else
-  echo 'Default output format (html) will be used.'
-  execute_report_html $HOST_NAME $COMPARE_SOURCE $COMPARE_DESTINATION
+  echo 'Default output format (machinery) will be used.'
+  execute_report_machinery $HOST_NAME $COMPARE_SOURCE $COMPARE_DESTINATION
 fi
 
 }
@@ -102,6 +104,24 @@ select_timeframe(){
 execute_report_html(){
 # TODO: add some logic for the html report
 echo foo
+}
+
+execute_report_machinery(){
+  # change to reports directory
+  cd $MACHINERY_ROOT
+
+  # creake directory and manifest for SOURCE revision
+  mkdir "$1_$2"
+  git show $2:$1/manifest.json > $1_$2/manifest.json
+
+  # creake directory and manifest for DESTINATION revision
+  mkdir "$1_$3"
+  git show $3:$1/manifest.json > $1_$3/manifest.json
+
+  machinery compare $1_$2 $1_$3
+
+  # remove compare dirs
+  rm -rf $1_$2/ $1_$3/
 }
 
 execute_report_diff(){
