@@ -4,7 +4,7 @@
 
 ## Description
 
-There is a Tool called machinery which is capable of scanning an inventory of linux machines. This project consists of 2 components which are doing things around machinery. There is a scanner script which launches machinery for a bunch of hosts and is capable of doing it in parallel. Also the scanner script makes sure, that each time you scan a host, the result will be put into a GIT repository.
+There is a Tool called [machinery](https://github.com/SUSE/machinery) which is capable of scanning an inventory of linux machines. This project consists of 2 components which are doing things around machinery. There is a scanner script which launches machinery for a bunch of hosts and is capable of doing it in parallel. Also the scanner script makes sure, that each time you scan a host, the result will be put into a GIT repository.
 
 The second part of the project is a reporting script. As all scans are commited to a GIT repo, you can compare different states of your machines. For that reason this is kind of a change detection system.
 
