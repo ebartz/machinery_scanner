@@ -20,6 +20,7 @@ Those commands will install you the requirements for machinery:
 ```
 yum -y install ruby rubygems ruby-devel gcc zlib-devel patch xdg-utils golang
 gem install rake machinery-tool
+```
 ### GIT and Scripts
 ```
 yum -y install git
@@ -37,6 +38,20 @@ cd machinery_scanner
 ## Components
 
 ### Scanner
+
+```
+Parameters:
+  -h, --host     : specifies a hostname that you want to scan
+  -f, --file     : specifies a file which contains a bunch of hostnames
+  -p, --parallel : specifies the number of scans that should be performed in parallel. Default = 4
+
+Examples:
+Just scan one server:
+./scan.sh -h my_server
+
+Scan a list of hosts in a file with 10 scans in parallel:
+./scan.sh -f host_list -p 10
+```
 
 
 ### Reporting
