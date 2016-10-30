@@ -9,10 +9,37 @@ There is a Tool called [machinery](https://github.com/SUSE/machinery) which is c
 The second part of the project is a reporting script. As all scans are commited to a GIT repo, you can compare different states of your machines. For that reason this is kind of a change detection system.
 
 
-## Scanner
+## Quick Start
+
+On CentOS 6 or 7 all you need to get started is machinery and GIT
+
+### Machinery
+
+Those commands will install you the requirements for machinery:
+
+```
+yum -y install ruby rubygems ruby-devel gcc zlib-devel patch xdg-utils golang
+gem install rake machinery-tool
+### GIT and Scripts
+```
+yum -y install git
+git clone https://github.com/ebartz/machinery_scanner.git
+```
+
+### First Scans
+After installing all the requirements, you can do the first scans just like this:
+
+```
+cd machinery_scanner
+./scan.sh -h "host1 host2 host3"
+```
+
+## Components
+
+### Scanner
 
 
-## Reporting
+### Reporting
 
 ```
 [root@machinery_master machinery_scanner]# ./report.sh -h machinery_host1 -o machinery

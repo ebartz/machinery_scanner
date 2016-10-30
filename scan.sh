@@ -41,7 +41,7 @@ done
 
 # main vars
 MACHINERY_ROOT=~/.machinery/
-$PARALLEL_JOBS_DEFAULT=4
+PARALLEL_JOBS_DEFAULT=4
 
 
 ######################
