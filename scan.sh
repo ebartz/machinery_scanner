@@ -90,13 +90,35 @@ perform_scan(){
 }
 
 print_help(){
-# TODO: add help with parameters
-echo foo
+######################
+# print help
+######################
+
+if [ $# -eq 0 ]
+  then
+    echo "Parameters:
+  -h, --host     : specifies a hostname that you want to scan
+  -f, --file     : specifies a file which contains a bunch of hostnames
+  -p, --parallel : specifies the number of scans that should be performed in parallel. Default = $PARALLEL_JOBS_DEFAULT 
+
+Examples: 
+Just scan one server:
+$0 -h my_server
+
+Scan a list of hosts in a file with 10 scans in parallel:
+$0 -f host_list -p 10"
+
+exit 1
+fi
 }
 
 ######################
 # begin processing
 ######################
+
+
+# print help and exit if no parameters given
+print_help
 
 # check GIT repo
 check_git_repo
