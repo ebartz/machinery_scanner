@@ -105,6 +105,9 @@ Examples:
 Just scan one server:
 $0 -h my_server
 
+Scan a list of servers
+$0 -h \"host1 host2 host3\"
+
 Scan a list of hosts in a file with 10 scans in parallel:
 $0 -f host_list -p 10"
 

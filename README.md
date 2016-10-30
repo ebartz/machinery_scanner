@@ -49,6 +49,9 @@ Examples:
 Just scan one server:
 ./scan.sh -h my_server
 
+Scan a list of servers
+./scan.sh -h "host1 host2 host3"
+
 Scan a list of hosts in a file with 10 scans in parallel:
 ./scan.sh -f host_list -p 10
 ```
