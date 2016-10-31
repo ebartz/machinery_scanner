@@ -36,7 +36,7 @@ check_git_repo(){
 
 # concats the host list which comes in from a parameter with the ones which may come from a file
 generate_host_list(){
-HOST_LIST=$HOST_LIST $(test -f $HOST_FILE && cat $HOST_FILE | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g')
+HOST_LIST=$HOST_LIST $(test -f "$HOST_FILE" && cat "$HOST_FILE" | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g')
 }
 
 # will verify needed variables and print propper errors
