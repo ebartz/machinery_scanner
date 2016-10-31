@@ -89,14 +89,9 @@ perform_scan(){
   git commit $1/ -m "autocommit $1" > /dev/null
 }
 
+# prints help with command examples
 print_help(){
-######################
-# print help
-######################
-
-if [ $# -eq 0 ]
-  then
-    echo "Parameters:
+  echo "Parameters:
   -h, --host     : specifies a hostname that you want to scan
   -f, --file     : specifies a file which contains a bunch of hostnames
   -p, --parallel : specifies the number of scans that should be performed in parallel. Default = $PARALLEL_JOBS_DEFAULT 
@@ -110,9 +105,6 @@ $0 -h \"host1 host2 host3\"
 
 Scan a list of hosts in a file with 10 scans in parallel:
 $0 -f host_list -p 10"
-
-exit 1
-fi
 }
 
 ######################
@@ -121,7 +113,11 @@ fi
 
 
 # print help and exit if no parameters given
-print_help
+if [ $# -eq 0 ]
+then
+  print_help
+  exit 1
+fi
 
 # check GIT repo
 check_git_repo
