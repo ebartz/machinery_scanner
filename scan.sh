@@ -113,11 +113,9 @@ $0 -f host_list -p 10"
 
 
 # print help and exit if no parameters given
-if [ $# -eq 0 ]
-then
-  print_help
-  exit 1
-fi
+[[ $@ ]] || { print_help; exit 1; }
+
+echo past help
 
 # check GIT repo
 check_git_repo
