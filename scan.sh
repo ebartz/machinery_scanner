@@ -12,33 +12,6 @@
 #
 
 
-######################
-# fetch vars
-######################
-
-while [[ $# -gt 1 ]]
-do
-  key="$1"
-  case $key in
-    -h|--host)
-    HOST_LIST="$2"
-    shift
-    ;;
-    -f|--file)
-    HOST_FILE="$2"
-    shift
-    ;;
-    -p|--parallel)
-    PARALLEL_JOBS="$2"
-    shift
-    ;;
-    *)
-            # unknown option
-    ;;
-  esac
-shift # past argument or value
-done
-
 # main vars
 MACHINERY_ROOT=~/.machinery/
 PARALLEL_JOBS_DEFAULT=4
@@ -111,11 +84,37 @@ $0 -f host_list -p 10"
 # begin processing
 ######################
 
-
-# print help and exit if no parameters given
+# check if parameters are given and print help if not
 [[ $@ ]] || { print_help; exit 1; }
 
-echo past help
+######################
+# fetch vars
+######################
+
+while [[ $# -gt 1 ]]
+do
+  key="$1"
+  case $key in
+    -h|--host)
+    HOST_LIST="$2"
+    shift
+    ;;
+    -f|--file)
+    HOST_FILE="$2"
+    shift
+    ;;
+    -p|--parallel)
+    PARALLEL_JOBS="$2"
+    shift
+    ;;
+    *)
+            # unknown option
+    ;;
+  esac
+shift # past argument or value
+done
+
+echo $HOST_LIST
 
 # check GIT repo
 check_git_repo
